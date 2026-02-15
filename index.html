@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BITD E-SUMMIT 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+html{scroll-behavior:smooth;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+font-family:'Orbitron',sans-serif;
+color:white;
+overflow-x:hidden;
+background:black;
+}
+
+/* ================= ULTRA CINEMATIC BACKGROUND ================= */
+
+.bg-layer{
+position:fixed;
+top:0;left:0;
+width:100%;height:100%;
+background:url("bg.jpg") center/cover no-repeat;
+z-index:-5;
+animation:cinematicZoom 40s ease-in-out infinite alternate;
+}
+@keyframes cinematicZoom{
+from{transform:scale(1);}
+to{transform:scale(1.08);}
+}
+
+.bg-overlay{
+position:fixed;
+top:0;left:0;
+width:100%;height:100%;
+background:linear-gradient(rgba(0,0,0,.5),rgba(0,0,0,.85));
+z-index:-4;
+}
+
+.sun-glow{
+position:fixed;
+top:40%;left:50%;
+transform:translate(-50%,-50%);
+width:400px;height:400px;
+border-radius:50%;
+background:radial-gradient(circle,
+rgba(255,0,128,.5),
+rgba(255,0,128,.2),
+transparent 70%);
+filter:blur(60px);
+animation:glowPulse 6s infinite alternate;
+z-index:-3;
+}
+@keyframes glowPulse{
+from{opacity:.4;}
+to{opacity:.8;}
+}
+
+.water-shimmer{
+position:fixed;
+bottom:0;left:0;
+width:100%;height:40%;
+background:linear-gradient(to bottom,
+transparent,
+rgba(255,0,128,.15));
+animation:shimmerMove 6s linear infinite;
+z-index:-2;
+pointer-events:none;
+}
+@keyframes shimmerMove{
+from{background-position:0 0;}
+to{background-position:0 200px;}
+}
+
+.fog-layer{
+position:fixed;
+bottom:0;left:0;
+width:200%;height:35%;
+background:url("https://i.ibb.co/8cN4p7D/fog.png");
+background-size:cover;
+opacity:.2;
+animation:fogMove 60s linear infinite;
+z-index:-1;
+}
+@keyframes fogMove{
+from{transform:translateX(0);}
+to{transform:translateX(-50%);}
+}
+
+/* ================= NAVIGATION ================= */
+
+.navbar{
+position:fixed;
+top:0;width:100%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px 30px;
+background:rgba(0,0,0,.7);
+backdrop-filter:blur(10px);
+z-index:1000;
+}
+.logo{color:#00f5ff;}
+.menu-icon{font-size:26px;color:#ff0080;cursor:pointer;}
+.nav-links{
+list-style:none;
+position:fixed;
+top:0;right:-100%;
+width:250px;height:100%;
+background:black;
+padding-top:80px;
+transition:.4s;
+}
+.nav-links li{margin:20px 0;text-align:center;}
+.nav-links a{color:#00f5ff;text-decoration:none;}
+.nav-active{right:0;}
+@media(max-width:768px){.nav-links{width:100%;}}
+
+/* ================= HERO ================= */
+
+.hero{
+min-height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:0 20px;
+}
+.hero h1{
+font-size:clamp(2rem,6vw,4rem);
+color:#ff0080;
+text-shadow:0 0 20px #ff0080;
+}
+.hero p{margin-top:10px;font-size:clamp(.9rem,2.5vw,1.2rem);}
+button{
+margin-top:20px;
+padding:12px 30px;
+border:2px solid #00f5ff;
+background:transparent;
+color:#00f5ff;
+cursor:pointer;
+}
+button:hover{background:#00f5ff;color:black;}
+
+.countdown{
+margin-top:20px;
+font-size:clamp(1rem,3vw,1.8rem);
+color:#ff0080;
+text-shadow:0 0 10px #ff0080,0 0 20px #ff0080;
+}
+
+/* ================= VIDEO ================= */
+
+.video-section{
+position:relative;
+width:100%;
+padding-top:56.25%;
+height:0;
+}
+.video-section video{
+position:absolute;
+top:0;left:0;
+width:100%;height:100%;
+object-fit:cover;
+}
+
+/* ================= SECTIONS ================= */
+
+section{
+padding:clamp(60px,8vw,120px) 5%;
+text-align:center;
+}
+.section-title{
+color:#ff0080;
+font-size:clamp(1.8rem,4vw,2.5rem);
+margin-bottom:40px;
+}
+
+/* ================= CAROUSEL ================= */
+
+.carousel-container{
+position:relative;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+.carousel-wrapper{
+overflow:hidden;
+width:90%;
+}
+.carousel{
+display:flex;
+transition:transform .6s ease;
+}
+.card{
+min-width:33.33%;
+padding:25px;
+margin:10px;
+border:2px solid #00f5ff;
+background:rgba(0,0,0,.6);
+border-radius:10px;
+text-align:center;
+transition:.3s;
+}
+.card:hover{
+transform:scale(1.05);
+box-shadow:0 0 20px #00f5ff;
+}
+.arrow{
+background:#ff0080;
+border:none;
+color:white;
+font-size:26px;
+padding:10px 15px;
+cursor:pointer;
+box-shadow:0 0 15px #ff0080;
+z-index:10;
+}
+.arrow:hover{background:#00f5ff;}
+.left{margin-right:10px;}
+.right{margin-left:10px;}
+
+.dots{text-align:center;margin-top:20px;}
+.dots span{
+height:10px;width:10px;
+margin:5px;
+background:#888;
+border-radius:50%;
+display:inline-block;
+cursor:pointer;
+}
+.dots .active{
+background:#ff0080;
+box-shadow:0 0 10px #ff0080;
+}
+
+@media(max-width:992px){.card{min-width:50%;}}
+@media(max-width:600px){.card{min-width:100%;}}
+
+footer{text-align:center;padding:40px;color:#777;}
+</style>
+</head>
+
+<body>
+
+<!-- BACKGROUND LAYERS -->
+<div class="bg-layer"></div>
+<div class="bg-overlay"></div>
+<div class="sun-glow"></div>
+<div class="water-shimmer"></div>
+<div class="fog-layer"></div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+<div class="logo">BITD E-SUMMIT 2026</div>
+<div class="menu-icon" onclick="toggleMenu()">☰</div>
+<ul class="nav-links" id="navLinks">
+<li><a href="#events" onclick="toggleMenu()">Events</a></li>
+<li><a href="#speakers" onclick="toggleMenu()">Speakers</a></li>
+<li><a href="#sponsors" onclick="toggleMenu()">Sponsors</a></li>
+<li><a href="#team" onclick="toggleMenu()">Team</a></li>
+</ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+<h1>BITD E-SUMMIT 2026</h1>
+<p>Entrepreneurship Development Cell, BITD presents</p>
+<button onclick="document.getElementById('events').scrollIntoView()">ENTER THE SUMMIT</button>
+<div id="countdown" class="countdown"></div>
+</div>
+
+<!-- VIDEO -->
+<section class="video-section">
+<video autoplay muted loop playsinline>
+<source src="promo.mp4" type="video/mp4">
+</video>
+</section>
+
+<!-- EVENTS -->
+<section id="events">
+<h2 class="section-title">Event Matrix</h2>
+<div class="carousel-container">
+<button class="arrow left" onclick="slidePrev('eventCarousel')">&#10094;</button>
+<div class="carousel-wrapper">
+<div class="carousel" id="eventCarousel">
+<div class="card">Speaker Conclave</div>
+<div class="card">Startup Expo</div>
+<div class="card">100 Rs Venture</div>
+<div class="card">Who’s the CEO?</div>
+<div class="card">Virtual Stock Exchange</div>
+<div class="card">IPL Auction</div>
+<div class="card">Valo Showdown</div>
+<div class="card">Treasure Hunt</div>
+<div class="card">Newspaper Activity</div>
+<div class="card">The Meme Game</div>
+</div>
+</div>
+<button class="arrow right" onclick="slideNext('eventCarousel')">&#10095;</button>
+</div>
+<div class="dots" id="eventDots"></div>
+</section>
+
+<footer>Innovate Boldly. Execute Fearlessly.</footer>
+
+<script>
+function toggleMenu(){
+document.getElementById("navLinks").classList.toggle("nav-active");
+}
+
+// COUNTDOWN
+const eventDate=new Date("March 17, 2026 00:00:00").getTime();
+setInterval(()=>{
+const now=new Date().getTime();
+const d=Math.floor((eventDate-now)/(1000*60*60*24));
+const h=Math.floor(((eventDate-now)%(1000*60*60*24))/(1000*60*60));
+const m=Math.floor(((eventDate-now)%(1000*60*60))/(1000*60));
+const s=Math.floor(((eventDate-now)%(1000*60))/1000);
+document.getElementById("countdown").innerHTML=
+d+"D "+h+"H "+m+"M "+s+"S";
+},1000);
+
+// CAROUSEL SYSTEM
+let carousels={};
+
+function initCarousel(id,dotsId){
+const carousel=document.getElementById(id);
+const dotsContainer=document.getElementById(dotsId);
+const cards=carousel.children;
+let index=0;
+let visible=getVisibleCards();
+let total=cards.length;
+carousels[id]={index,visible,total};
+
+let pages=Math.ceil(total/visible);
+dotsContainer.innerHTML="";
+for(let i=0;i<pages;i++){
+let dot=document.createElement("span");
+dot.onclick=()=>goToSlide(id,i);
+dotsContainer.appendChild(dot);
+}
+updateDots(id,dotsId);
+
+setInterval(()=>slideNext(id),4000);
+
+let startX=0;
+carousel.addEventListener("touchstart",e=>{
+startX=e.touches[0].clientX;
+});
+carousel.addEventListener("touchend",e=>{
+let endX=e.changedTouches[0].clientX;
+if(startX-endX>50)slideNext(id);
+if(endX-startX>50)slidePrev(id);
+});
+}
+
+function getVisibleCards(){
+if(window.innerWidth<=600)return 1;
+if(window.innerWidth<=992)return 2;
+return 3;
+}
+
+function slideNext(id){
+let obj=carousels[id];
+obj.visible=getVisibleCards();
+obj.index+=obj.visible;
+if(obj.index>=obj.total)obj.index=0;
+updateCarousel(id);
+}
+
+function slidePrev(id){
+let obj=carousels[id];
+obj.visible=getVisibleCards();
+obj.index-=obj.visible;
+if(obj.index<0)obj.index=Math.floor((obj.total-1)/obj.visible)*obj.visible;
+updateCarousel(id);
+}
+
+function goToSlide(id,page){
+let obj=carousels[id];
+obj.visible=getVisibleCards();
+obj.index=page*obj.visible;
+updateCarousel(id);
+}
+
+function updateCarousel(id){
+let obj=carousels[id];
+const carousel=document.getElementById(id);
+carousel.style.transform=
+`translateX(-${obj.index*(100/obj.visible)}%)`;
+updateDots(id,id.replace("Carousel","Dots"));
+}
+
+function updateDots(id,dotsId){
+let obj=carousels[id];
+let dots=document.getElementById(dotsId).children;
+let activePage=Math.floor(obj.index/obj.visible);
+for(let i=0;i<dots.length;i++){
+dots[i].classList.remove("active");
+}
+if(dots[activePage])dots[activePage].classList.add("active");
+}
+
+window.onload=function(){
+initCarousel("eventCarousel","eventDots");
+};
+</script>
+
+</body>
+</html>
